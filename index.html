@@ -1,0 +1,134 @@
+<html>
+<head>
+	<title>Mapa das Lancherias de Lages!</title>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="Leaflet.Sidebar.css" />
+    <script src="Leaflet.Sidebar.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  	<style>
+    	#map{ height: 100% }
+        
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+        .lorem {
+            font-style: italic;
+            color: #AAA;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+                <li><a href="#messages" role="tab"><i class="fa fa-envelope"></i></a></li>
+            </ul>
+
+            <ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    Catalogo de restaurantes de Lages
+                    <div class="sidebar-close"><i class="fa fa-caret-left"></i></div>
+                </h1>
+
+                <p>MAPA EM FASE DE TESTES MAPA EM FASE DE TESTES.</p>
+
+                <p class="lorem">TESTE</p>
+            </div>
+
+            <div class="sidebar-pane" id="profile">
+                <h1 class="sidebar-header">Sobre<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+                    <h1>Criador</h1>
+                    <br> O site foi criado por Joao Souza, estudante de Engenharia Florestal e bolsista do laboratorio de SIG da Universidade do Estado de Santa Catarina, Campus de Ciencias Agroveterinarias.
+                    <br><h1>Objetivo</h1>
+                    <br> O principal objetivo deste site foi servir como passatempo e estudo de webmapping para o criador do site. Tambem pode vir a servir como catalogo de restaurantes, uma vez que conta com a sua localização e informações adicionais como o tipo de lanche servido e se há serviço de entrega ou nao.
+                    <br><h1>Futuro</h1>
+                    <br> Caso o site venha a ser utilizado, o mesmo podera receber atualizações e mudanças nas informações dos restaurantes, mediante pedido dos proprietarios.
+            </div>    
+            <div class="sidebar-pane" id="messages">
+                <h1 class="sidebar-header">Contato<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+                <br>Gostaria de adicionar ou retirar o seu estabelecimento do site? Basta manda um email para teste@teste.com.br!
+                <h4>Linkedin:</h4> link linkedin
+            </div>
+
+            <div class="sidebar-pane" id="settings">
+                <h1 class="sidebar-header">Settings<div class="sidebar-close"><i class="fa fa-caret-left"></i></div></h1>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+    <div class='custom-popup' id="map"></div>
+
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="Leaflet.Sidebar.js"></script>
+
+     <script>
+
+
+
+        // inicializa o mapa
+        var map = L.map('map').setView([-27.8167,-50.3264], 15);
+
+        // carrega a layer
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    {
+        attribution: 'Tiles by <a href="http://openstreetmap.org">Open Street Map</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+            maxZoom: 17,
+            minZoom: 9
+        }).addTo(map);
+
+        
+
+        // Carrega um arquivo GeoJSON de um arquivo externo
+
+        $.getJSON("map.geojson",function(data){
+            var icone = L.icon({
+        iconUrl: 'http://icons.iconarchive.com/icons/mozco/kitchen/32/Hamburger-icon.png',
+        iconSize: [40,40]
+        });
+        L.geoJson(data,{
+            pointToLayer: function(feature,latlng){
+        var marker = L.marker(latlng,{icon: icone});
+            marker.bindPopup('Local: ' + feature.properties.Nome + '<br/>' + 'Tipo de lanche: ' + feature.properties.Tipo);
+            return marker;
+        }
+        }).addTo(map);
+        });
+
+  // Carrega a sidebar
+        var sidebar = L.control.sidebar('sidebar', {
+      closeButton: false,
+      position: 'left'
+    });
+    map.addControl(sidebar);
+    setTimeout(function() {
+      sidebar.show();
+    }, 500);
+  
+  
+
+
+    </script>
+</body>
+</html>
