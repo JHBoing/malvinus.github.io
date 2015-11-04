@@ -110,7 +110,7 @@
         L.geoJson(data,{
             pointToLayer: function(feature,latlng){
         var marker = L.marker(latlng,{icon: icone});
-            marker.bindPopup('Local: ' + feature.properties.Nome + '<br/>' + 'Tipo de lanche: ' + feature.properties.Tipo);
+                marker.bindPopup('<h3>' + feature.properties.Nome + '</h3>' + '</br>' + '<h6>' + 'Informações:' + '</h6>' +'</br>' +  'Produto: ' + feature.properties.Tipo + '<br>' + <'Entrega: ' + feature.properties.Telefone + '</br>' + 'Site: ' + feature.properties.Site + '</br>' + 'Horário de atendimento: ' + feature.properties.Horario);
             return marker;
         }
         }).addTo(map);
