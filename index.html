@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Mapa das Lancherias de Lages!</title>
+	<title>Mapa das Lancherias de Lages</title>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
   	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -104,18 +104,32 @@
 
         $.getJSON("map.geojson",function(data){
             var icone = L.icon({
-        iconUrl: 'http://icons.iconarchive.com/icons/mozco/kitchen/32/Hamburger-icon.png',
-        iconSize: [40,40]
+        iconUrl: 'http://icons.iconarchive.com/icons/iron-devil/ids-3d-icons-20/32/Hamburger-icon.png',
+        iconSize: [30,30]
         });
         L.geoJson(data,{
             pointToLayer: function(feature,latlng){
         var marker = L.marker(latlng,{icon: icone});
-                marker.bindPopup('<h3>' + feature.properties.Nome + '</h3>' + '</br>' + 'Informações:' + '</br>' +  'Produto: ' + feature.properties.Tipo + '</br>' + 'Entrega: ' + feature.properties.Entrega + '</br>' + 'Telefone: ' + feature.properties.Telefone + '</br>' + 'Site: ' + feature.properties.Site + '</br>' + 'Horário de atendimento: ' + feature.properties.Horario);
+                marker.bindPopup('<h3>' + feature.properties.Nome + '</h3>' + '</br>' + 'Informacoes:' + '</br>' +  'Produto: ' + feature.properties.Tipo + '</br>' + 'Entrega: ' + feature.properties.Entrega + '</br>' + 'Telefone: ' + feature.properties.Telefone + '</br>' + 'Site: ' + feature.properties.Site + '</br>' + 'Horário de atendimento: ' + feature.properties.Horario);
             return marker;
         }
         }).addTo(map);
         });
 
+         
+        $.getJSON("pizza.geojson",function(data){
+            var icone = L.icon({
+        iconUrl: 'http://icons.iconarchive.com/icons/iconmuseo/fast-food/32/pizza-icon.png',
+        iconSize: [30,30]
+        });
+        L.geoJson(data,{
+            pointToLayer: function(feature,latlng){
+        var marker = L.marker(latlng,{icon: icone});
+                marker.bindPopup('<h3>' + feature.properties.Nome + '</h3>' + '</br>' + 'Informacoes:' + '</br>' + 'Destaque: ' + feature.properties.Destaque + '</br>' + 'Entrega: ' + feature.properties.Entrega + '</br>' + 'Rodízio: ' + feature.properties.Rodizio + '</br>' + 'Telefone: ' + feature.properties.Telefone + '</br>' + 'Site: ' + feature.properties.Site + '</br>' + 'Horário de atendimento: ' + feature.properties.Horario);
+            return marker;
+        }
+        }).addTo(map);
+        });
   // Carrega a sidebar
         var sidebar = L.control.sidebar('sidebar', {
       closeButton: false,
